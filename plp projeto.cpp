@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+
 using namespace std;
 
 char matriz[5][5]= {
@@ -12,15 +13,6 @@ char matriz[5][5]= {
  
 string  menssagem; 
 
-
-void recebeMenssagem(){
-	getline(cin,menssagem);
-	/* 
-	tiraEspacos(menssagem);
-	verificaCondicaoX(menssagem);
-	cifraMenssagem(menssagem);
-	*/
-}
 
 void tiraEspacos(string str){
 	int i;
@@ -58,7 +50,6 @@ void verificaCondicaoX(string str){
 
 
 string linha(int linhax, int colunax, int linhay, int colunay){
-	cout << "linha" << endl;
 	string retorno;
 	if(colunax == 4){
 		colunax = -1;
@@ -74,7 +65,6 @@ string linha(int linhax, int colunax, int linhay, int colunay){
 }
 
 string coluna(int linhax, int colunax, int linhay, int colunay){
-	cout << "coluna" << endl;
 	string retorno;
 	if(linhax == 4){
 		linhax = -1;
@@ -91,7 +81,6 @@ string coluna(int linhax, int colunax, int linhay, int colunay){
 }
 
 string retangulo(int linhax, int colunax, int linhay, int colunay){
-	cout << "retangulo" << endl;
 	string retorno;	
 	retorno += matriz[linhay][colunax];
 	retorno += matriz[linhax][colunay];
@@ -156,17 +145,176 @@ void cifraMenssagem(string str){
 		cifra += valorLinhaEColuna(str[i],str[i+1]);
 	}
 	menssagem = cifra;
+
+}
+
+string decifralinha(int linhax, int colunax, int linhay, int colunay){
+	string retorno;
+	if(colunax == 0){
+		colunax = 5;
+	}
+	
+	if(colunay == 0){
+		colunay = 5;
+	}
+	
+	retorno += matriz[linhax][colunax-1];
+	retorno += matriz[linhay][colunay-1];
+	return retorno;
+}
+
+string decifracoluna(int linhax, int colunax, int linhay, int colunay){
+	string retorno;
+	if(linhax == 0){
+		linhax = 5;
+	}
+	
+	if(linhay == 0){
+		linhay = 5;
+	}
+	
+	retorno += matriz[linhax-1][colunax];
+	retorno += matriz[linhay-1][colunay];
+	
+	return retorno;
+}
+
+string decifraretangulo(int linhax, int colunax, int linhay, int colunay){
+	string retorno;	
+	retorno += matriz[linhay][colunax];
+	retorno += matriz[linhax][colunay];
+	
+	return retorno;
+}
+
+string decifravalorLinhaEColuna(char x ,char y){
+	int linhaX = -1;
+	int colunaX = -1;
+	int linhaY = -1;
+	int colunaY = -1;
+	
+	int i = 0;
+	
+	while( i<5 && linhaX == -1){
+		int j = 0;
+		
+		while(j<5 && linhaX == -1){
+			if(matriz[i][j] == x){
+				linhaX = i;
+				colunaX = j;
+			}
+			j++;
+		}
+		i++;
+	}
+	
+	i = 0;
+	
+	while(i<5 && linhaY == -1){	
+		int j = 0;
+		
+		while(j<5 && linhaY == -1){
+			if(matriz[i][j] == y){
+				linhaY = i;
+				colunaY = j;
+			}
+			j++;
+		}
+		
+		i++;
+	}
+
+
+	if(linhaX == linhaY){
+		return decifralinha(linhaX,colunaX,linhaY,colunaY);
+		
+	}else if(colunaX == colunaY){
+		return decifracoluna(linhaX,colunaX,linhaY,colunaY);
+		
+	}else {
+		return decifraretangulo(linhaX,colunaX,linhaY,colunaY);
+	}
+		
+}
+
+void decifraMenssagem(){
+	string decifra;
+	int i;
+	for( i = 0 ;i < menssagem.size(); i+=2){
+		decifra += decifravalorLinhaEColuna(menssagem[i],menssagem[i+1]);
+	}
+	menssagem = decifra;
+}
+
+void recebeMenssagem(){
+	getline(cin,menssagem);
+	cin.ignore ();
+	tiraEspacos(menssagem);
+	verificaCondicaoX(menssagem);
+	cifraMenssagem(menssagem);
+	
+}
+
+void verAlfabeto(){
+	int i = 0;
+	string alfabeto;
+	
+	while( i<5 ){
+		int j = 0;
+		
+		while(j<5 ){
+			alfabeto += matriz[i][j];
+			if(j == 4){
+				alfabeto += "\n";
+			}
+		
+			j++;
+		}
+		i++;
+	}
+	cout << alfabeto << endl;
+
 }
 
 
 int main(){
-	recebeMenssagem();
-	cout << menssagem << " menssagem recebida"<< endl;
-	tiraEspacos(menssagem);
-	cout << menssagem << " sem os espacos" << endl;
-	verificaCondicaoX(menssagem);
-	cout << menssagem << " condicoes de modificaçao"<< endl;
-	cifraMenssagem(menssagem);
-	cout << menssagem << " menssagem cifrada"<< endl;
+	bool terminar = true;
+	int opcoes;
+	while(terminar){
+		
+		cout << "Digite o numero da opcao\n"<<
+		"1. Escolher uma tabela de cifra nova\n" <<
+		"2. Introduzir uma mensagem para cifrar\n" << 
+		"3. Ver a mensagem cifrada\n" <<
+		"4. Decifrar a mensagem\n" <<
+		"5. Ver o alfabeto\n" <<
+		"6. Terminar\n" << endl;
+		cin>>opcoes;
+		cin.ignore ();
+		
+		switch (opcoes){
+			case 1:
+				break;	
+			case 2:
+				cout << "Digite a menssagem" << endl;
+				recebeMenssagem();
+				cout << "Menssagem cifrada com sucesso" << endl;
+				break;
+			case 3:
+				cout << "Cifra: " << menssagem <<  endl;
+				break;
+			case 4:
+				decifraMenssagem();
+				cout << "menssagem decifrada: " << menssagem <<  endl;
+				break;
+			case 5:
+				verAlfabeto();
+				break;
+			case 6:
+				terminar = false;
+				break;
+		}
+		
+	}
 	
 }
