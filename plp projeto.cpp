@@ -11,26 +11,26 @@ char matriz[5][5]= {
   {'u','v','w','x','z'}
 };
  
-string  menssagem; 
+string  mensagem; 
 
 
 void tiraEspacos(string str){
 	int i;
 	string retorno;
-	for(i = 0 ;i < str.size(); i++){
+	int tamanhoMensagem = str.size();
+	for(i = 0 ;i < tamanhoMensagem; i++){
 		if(str[i] != ' '){
 			retorno += str[i] ;
 		}
 	}
-	menssagem = retorno;
+	mensagem = retorno;
 }
 
 void verificaCondicaoX(string str){
 	
-	int i;
 	string retorno;
-	
-	for(i = 0 ;i < str.size()-1; i++){
+	int tamanhoMensagem = str.size() - 1;
+	for(int i = 0 ;i < tamanhoMensagem; i++){
 		if(str[i] == str[i+1]){
 			retorno += str[i];
 			retorno += "x";
@@ -45,7 +45,7 @@ void verificaCondicaoX(string str){
 		retorno += "x";
 	}
 	
-	menssagem = retorno;
+	mensagem = retorno;
 }
 
 
@@ -137,14 +137,15 @@ string valorLinhaEColuna(char x ,char y){
 	}
 		
 }
+/* */
 
-void cifraMenssagem(string str){
+void cifraMensagem(string str){
 	string cifra;
-	int i;
-	for( i = 0 ;i < str.size(); i+=2){
+	int tamanhoMensagem = str.size();
+	for(int i = 0 ;i < tamanhoMensagem; i+=2){
 		cifra += valorLinhaEColuna(str[i],str[i+1]);
 	}
-	menssagem = cifra;
+	mensagem = cifra;
 
 }
 
@@ -237,21 +238,20 @@ string decifravalorLinhaEColuna(char x ,char y){
 		
 }
 
-void decifraMenssagem(){
+void decifraMensagem(){
 	string decifra;
-	int i;
-	for( i = 0 ;i < menssagem.size(); i+=2){
-		decifra += decifravalorLinhaEColuna(menssagem[i],menssagem[i+1]);
+	int tamanhoMensagem = mensagem.size();
+	for(int i = 0 ;i < tamanhoMensagem; i+=2){
+		decifra += decifravalorLinhaEColuna(mensagem[i],mensagem[i+1]);
 	}
-	menssagem = decifra;
+	mensagem = decifra;
 }
 
-void recebeMenssagem(){
-	getline(cin,menssagem);
-	cin.ignore ();
-	tiraEspacos(menssagem);
-	verificaCondicaoX(menssagem);
-	cifraMenssagem(menssagem);
+void recebeMensagem(){
+	getline(cin,mensagem);
+	tiraEspacos(mensagem);
+	verificaCondicaoX(mensagem);
+	cifraMensagem(mensagem);
 	
 }
 
@@ -296,16 +296,16 @@ int main(){
 			case 1:
 				break;	
 			case 2:
-				cout << "Digite a menssagem" << endl;
-				recebeMenssagem();
-				cout << "Menssagem cifrada com sucesso" << endl;
+				cout << "Digite a mensagem" << endl;
+				recebeMensagem();
+				cout << "Mensagem cifrada com sucesso" << "\n" << endl;
 				break;
 			case 3:
-				cout << "Cifra: " << menssagem <<  endl;
+				cout << "Cifra: " << mensagem << "\n" <<  endl;
 				break;
 			case 4:
-				decifraMenssagem();
-				cout << "menssagem decifrada: " << menssagem <<  endl;
+				decifraMensagem();
+				cout << "mensagem decifrada: " << mensagem << "\n" <<  endl;
 				break;
 			case 5:
 				verAlfabeto();
