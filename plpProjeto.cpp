@@ -308,6 +308,23 @@ void decifra(){
 	encontraFalsoX();
 	retirarX();
 }
+
+void redefineTabela(){
+	string novaMatriz;
+	int k = 0;
+	
+	cout << "Digite as 25 trs do alfabeto sem repetir (desconsidere 'y'): " << "\n" <<  endl;
+	getline(cin,novaMatriz);
+	
+	for(int i=0 ; i<5 ; i++){
+		for(int j=0 ; j<5 ; j++){
+			matriz[i][j] = novaMatriz[k];
+			k++;
+		}
+	}
+	
+}
+
 int main(){
 	bool terminar = true;
 	int opcoes;
@@ -325,6 +342,7 @@ int main(){
 		
 		switch (opcoes){
 			case 1:
+				redefineTabela();
 				break;	
 			case 2:
 				cout << "Digite a mensagem" << endl;
