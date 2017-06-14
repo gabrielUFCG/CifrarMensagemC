@@ -12,12 +12,13 @@ char matriz[5][5]= {
 };
  
 string  mensagem; 
-
+bool completandaNumeroPar = false;
 
 void tiraEspacos(string str){
+	int i;
 	string retorno;
 	int tamanhoMensagem = str.size();
-	for(int i = 0 ;i < tamanhoMensagem; i++){
+	for(i = 0 ;i < tamanhoMensagem; i++){
 		if(str[i] != ' '){
 			retorno += str[i] ;
 		}
@@ -25,7 +26,7 @@ void tiraEspacos(string str){
 	mensagem = retorno;
 }
 
-void verificaCondicaoX(string str){
+void colocaX(string str){
 	
 	string retorno;
 	int tamanhoMensagem = str.size() - 1;
@@ -35,20 +36,22 @@ void verificaCondicaoX(string str){
 			retorno += "x";
 		}else{
 			retorno += str[i];
+			
 		}
 	}
 	
 	retorno += str[str.size()-1];
-	
+
 	if(retorno.size()%2 != 0){
 		retorno += "x";
+		completandaNumeroPar = true;
 	}
 	
 	mensagem = retorno;
 }
 
 
-string linha(int linhax, int colunax, int linhay, int colunay){
+string condicaoLinha(int linhax, int colunax, int linhay, int colunay){
 	string retorno;
 	if(colunax == 4){
 		colunax = -1;
@@ -63,7 +66,7 @@ string linha(int linhax, int colunax, int linhay, int colunay){
 	return retorno;
 }
 
-string coluna(int linhax, int colunax, int linhay, int colunay){
+string condicaoColuna(int linhax, int colunax, int linhay, int colunay){
 	string retorno;
 	if(linhax == 4){
 		linhax = -1;
@@ -79,7 +82,7 @@ string coluna(int linhax, int colunax, int linhay, int colunay){
 	return retorno;
 }
 
-string retangulo(int linhax, int colunax, int linhay, int colunay){
+string condicaoRetangulo(int linhax, int colunax, int linhay, int colunay){
 	string retorno;	
 	retorno += matriz[linhay][colunax];
 	retorno += matriz[linhax][colunay];
@@ -87,7 +90,7 @@ string retangulo(int linhax, int colunax, int linhay, int colunay){
 	return retorno;
 }
 
-string valorLinhaEColuna(char x ,char y){
+string condicionaCifra(char x ,char y){
 	int linhaX = -1;
 	int colunaX = -1;
 	int linhaY = -1;
@@ -126,28 +129,29 @@ string valorLinhaEColuna(char x ,char y){
 
 
 	if(linhaX == linhaY){
-		return linha(linhaX,colunaX,linhaY,colunaY);
+		return condicaoLinha(linhaX,colunaX,linhaY,colunaY);
 		
 	}else if(colunaX == colunaY){
-		return coluna(linhaX,colunaX,linhaY,colunaY);
+		return condicaoColuna(linhaX,colunaX,linhaY,colunaY);
 		
 	}else {
-		return retangulo(linhaX,colunaX,linhaY,colunaY);
+		return condicaoRetangulo(linhaX,colunaX,linhaY,colunaY);
 	}
 		
 }
 
-void cifraMensagem(string str){
+
+void cifra2a2(string str){
 	string cifra;
 	int tamanhoMensagem = str.size();
 	for(int i = 0 ;i < tamanhoMensagem; i+=2){
-		cifra += valorLinhaEColuna(str[i],str[i+1]);
+		cifra += condicionaCifra(str[i],str[i+1]);
 	}
 	mensagem = cifra;
 
 }
 
-string decifralinha(int linhax, int colunax, int linhay, int colunay){
+string condicaoDecifraLinha(int linhax, int colunax, int linhay, int colunay){
 	string retorno;
 	if(colunax == 0){
 		colunax = 5;
@@ -162,7 +166,7 @@ string decifralinha(int linhax, int colunax, int linhay, int colunay){
 	return retorno;
 }
 
-string decifracoluna(int linhax, int colunax, int linhay, int colunay){
+string condicaoDecifraColuna(int linhax, int colunax, int linhay, int colunay){
 	string retorno;
 	if(linhax == 0){
 		linhax = 5;
@@ -178,7 +182,7 @@ string decifracoluna(int linhax, int colunax, int linhay, int colunay){
 	return retorno;
 }
 
-string decifraretangulo(int linhax, int colunax, int linhay, int colunay){
+string condicaoDecifraRetangulo(int linhax, int colunax, int linhay, int colunay){
 	string retorno;	
 	retorno += matriz[linhay][colunax];
 	retorno += matriz[linhax][colunay];
@@ -186,7 +190,7 @@ string decifraretangulo(int linhax, int colunax, int linhay, int colunay){
 	return retorno;
 }
 
-string decifravalorLinhaEColuna(char x ,char y){
+string condicionaDeciframento(char x ,char y){
 	int linhaX = -1;
 	int colunaX = -1;
 	int linhaY = -1;
@@ -225,31 +229,32 @@ string decifravalorLinhaEColuna(char x ,char y){
 
 
 	if(linhaX == linhaY){
-		return decifralinha(linhaX,colunaX,linhaY,colunaY);
+		return condicaoDecifraLinha(linhaX,colunaX,linhaY,colunaY);
 		
 	}else if(colunaX == colunaY){
-		return decifracoluna(linhaX,colunaX,linhaY,colunaY);
+		return condicaoDecifraColuna(linhaX,colunaX,linhaY,colunaY);
 		
 	}else {
-		return decifraretangulo(linhaX,colunaX,linhaY,colunaY);
+		return condicaoDecifraRetangulo(linhaX,colunaX,linhaY,colunaY);
 	}
 		
 }
 
-void decifraMensagem(){
+void decifra2a2(){
 	string decifra;
 	int tamanhoMensagem = mensagem.size();
 	for(int i = 0 ;i < tamanhoMensagem; i+=2){
-		decifra += decifravalorLinhaEColuna(mensagem[i],mensagem[i+1]);
+		decifra += condicionaDeciframento(mensagem[i],mensagem[i+1]);
 	}
 	mensagem = decifra;
 }
 
-void recebeMensagem(){
+void cifra(){
+	completandaNumeroPar = false;
 	getline(cin,mensagem);
 	tiraEspacos(mensagem);
-	verificaCondicaoX(mensagem);
-	cifraMensagem(mensagem);
+	colocaX(mensagem);
+	cifra2a2(mensagem);
 	
 }
 
@@ -274,7 +279,35 @@ void verAlfabeto(){
 
 }
 
+void encontraFalsoX(){
+	int tamanhoMensagem = mensagem.size();
+	for (int i=1; i < tamanhoMensagem-1 ; i++){
+		if( mensagem[i-1] == mensagem[i+1] && mensagem[i] == 'x' ) {
+			mensagem[i] = 'y';
+		} 
+		
+	}
+	if(completandaNumeroPar){
+		mensagem[tamanhoMensagem-1] = 'y';
+	}
+}
 
+void retirarX(){
+	string retorno;
+	int tamanhoMensagem = mensagem.size();
+	for(int i=0 ; i< tamanhoMensagem ; i++ ){
+		if(mensagem[i] != 'y'){
+			retorno += mensagem[i];
+		}
+	}
+	mensagem = retorno;
+}
+
+void decifra(){
+	decifra2a2();
+	encontraFalsoX();
+	retirarX();
+}
 int main(){
 	bool terminar = true;
 	int opcoes;
@@ -295,14 +328,14 @@ int main(){
 				break;	
 			case 2:
 				cout << "Digite a mensagem" << endl;
-				recebeMensagem();
+				cifra();
 				cout << "Mensagem cifrada com sucesso" << "\n" << endl;
 				break;
 			case 3:
 				cout << "Cifra: " << mensagem << "\n" <<  endl;
 				break;
 			case 4:
-				decifraMensagem();
+				decifra();
 				cout << "mensagem decifrada: " << mensagem << "\n" <<  endl;
 				break;
 			case 5:
