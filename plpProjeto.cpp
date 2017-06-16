@@ -15,12 +15,13 @@ string  mensagem;
 bool completandaNumeroPar = false;
 
 void tiraEspacos(string str){
-	int i;
 	string retorno;
 	int tamanhoMensagem = str.size();
-	for(i = 0 ;i < tamanhoMensagem; i++){
+	for(int i = 0 ;i < tamanhoMensagem; i++){
 		if(str[i] != ' '){
 			retorno += str[i] ;
+		}else{
+			retorno += "w";
 		}
 	}
 	mensagem = retorno;
@@ -303,17 +304,32 @@ void retirarX(){
 	mensagem = retorno;
 }
 
+void encontraEspaco(){
+	string retorno;
+	int tamanhoMensagem = mensagem.size();
+	for(int i=0 ; i< tamanhoMensagem ; i++ ){
+		if(mensagem[i] == 'w'){
+			retorno += " ";
+		}else{
+			retorno += mensagem[i];
+		}	
+	}
+	mensagem = retorno;
+}
+	
+
 void decifra(){
 	decifra2a2();
 	encontraFalsoX();
 	retirarX();
+	encontraEspaco();
 }
 
 void redefineTabela(){
 	string novaMatriz;
 	int k = 0;
 	
-	cout << "Digite as 25 trs do alfabeto sem repetir (desconsidere 'y'): " << "\n" <<  endl;
+	cout << "Digite as 25 letras do alfabeto sem repetir (desconsidere 'y'): " << "\n" <<  endl;
 	getline(cin,novaMatriz);
 	
 	for(int i=0 ; i<5 ; i++){
@@ -345,16 +361,16 @@ int main(){
 				redefineTabela();
 				break;	
 			case 2:
-				cout << "Digite a mensagem" << endl;
+				cout << "Digite a mensagem (nao pode conter y e w):" << endl;
 				cifra();
-				cout << "Mensagem cifrada com sucesso" << "\n" << endl;
+				cout << "Mensagem cifrada com sucesso." << "\n" << endl;
 				break;
 			case 3:
 				cout << "Cifra: " << mensagem << "\n" <<  endl;
 				break;
 			case 4:
 				decifra();
-				cout << "mensagem decifrada: " << mensagem << "\n" <<  endl;
+				cout << "Mensagem decifrada: " << mensagem << "\n" <<  endl;
 				break;
 			case 5:
 				verAlfabeto();
